@@ -1,0 +1,106 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+{% block title %}
+    Посты   
+{% endblock title %}
+{% block content %}
+{% if 'search' in request.path %}        
+        <div class="card">
+            <div class="card-header">
+                <h2 class="display-5">Поиск</h2>
+            </div>
+            <div class="card-body p-0 mt-4">
+                <form action="" method='get'>
+                    {{ filterset.form.as_table }}
+                    <br>
+                    <input type="submit" value='найти' class='btn btn-primary mt-4 mb-4' />
+                </form>
+            </div>
+        </div>
+{% else %}
+    <h2 class="display-5">ВСЕ ПОСТЫ</h2>
+{% endif %}
+
+    {% if posts %}
+        {% comment %} <p class='text-start'>количество постов - {{ posts| length}}</p> {% endcomment %}
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th scope='col'>Заголовок</th>
+                    <th scope='col'>Дата публикации</th>
+                    <th scope='col'>Тип поста</th>
+                    <th scope='col'>Категории </th>
+                    <th scope='col'>Контент</th>
+                </tr>
+            </thead>
+            {% for item in posts %}
+                <tbody>
+                    <tr>
+                        <td>{{ item.post_title|censor }}</td>
+                        <td>{{ item.post_date|date:'d.M.Y' }}</td>
+                        <td>{{ item.get_post_type_display }}</td>
+                        <td> 
+                            {% for items in item.categories.all %}
+                                {{ items.get_category_name_display|add:', ' }} 
+                            {% endfor %} 
+                        </td> 
+                        <td>{{ item.post_content|truncatechars:20|censor }} </td>
+                        <td class='pe-0'><a href="/posts/{{item.id }}" class="btn btn-dark btn-sm"> Читать </a> </td>
+                        
+                    </tr>
+                </tbody>
+            {% endfor %}
+
+        </table>
+            {% if page_obj %}
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.number == 1 %}
+                        <li class="page-item disabled"><a class="page-link" href="?{% url_replace page=1 %}">Начало</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}">Начало</a></li>
+                    {% endif %}
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">Пред.</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">Пред.</a></li>
+                    {% endif %}
+
+                    {% if page_obj.has_previous and page_obj.previous_page_number == 1 %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}">1</a></li>
+                    {% endif %}
+
+                    {% if page_obj.previous_page_number != 1 %}
+                        <span> ... </span>
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number}}</a></li>
+                    {% endif %}
+
+                        <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number}}</a></li>
+                    
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number}}</a></li>
+                        {% if page_obj.paginator.num_pages != page_obj.next_page_number %}
+                        <span> ... </span>
+                        <li class="page-item "><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">След.</a></li>
+                    {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">След.</a></li>
+                    {% endif %}
+                    {% if page_obj.number == page_obj.paginator.num_pages %}
+                        <li class="page-item disabled"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">Конец</a></li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">Конец</a></li>
+                    {% endif %}
+
+                </ul>
+            {% endif %}
+    {% else %}
+        <h2>Нет Постов</h2>
+    {% endif %}
+
+    
+{% endblock content %}

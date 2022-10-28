@@ -1,0 +1,75 @@
+from news.models import *
+
+user1 = User.objects.create_user(username='Gentle')
+user2 = User.objects.create_user(username='Alex')
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user2)
+
+cat1 = Category.objects.create(category_name=Category.politics) 
+cat2 = Category.objects.create(category_name=Category.sport)    
+cat3 = Category.objects.create(category_name=Category.science) 
+cat4 = Category.objects.create(category_name=Category.education)  
+cat5 = Category.objects.create(category_name=Category.religion) 
+
+article1 = Post.objects.create(post_type=Post.articles, post_title='Новая статья 1', post_content='Контент статьи номер 1 от author1', post_author=author1) 
+article2 = Post.objects.create(post_type=Post.articles, post_title='Новая статья 2', post_content='Контент статьи номер 2 от author1', post_author=author1)  
+article3 = Post.objects.create(post_type=Post.articles, post_title='Новая статья 3', post_content='Контент статьи номер 3 от author2', post_author=author2) 
+
+news1 = Post.objects.create(post_type=Post.news, post_title='Новость 1', post_content='Контент новости номер 1 от author2', post_author=author2)            
+news2 = Post.objects.create(post_type=Post.news, post_title='Новость 2', post_content='Контент новости номер 2 от author1', post_author=author1)  
+
+article1.categories.add(cat1)   
+article1.categories.add(cat2)  
+article2.categories.add(cat2) 
+article2.categories.add(cat4)  
+article3.categories.add(cat3)  
+article3.categories.add(cat5)  
+news1.categories.add(cat5) 
+news1.categories.add(cat1) 
+news2.categories.add(cat3)  
+news2.categories.add(cat4) 
+
+comment1 = Comment.objects.create(comment_post=article1, comment_user=user2, comment_text='Комментария от пользователя user2')
+comment2 = Comment.objects.create(comment_post=article2, comment_user=user2, comment_text='Комментария от пользователя user2') 
+comment3 = Comment.objects.create(comment_post=article3, comment_user=user1, comment_text='Комментария от пользователя user1')  
+comment4 = Comment.objects.create(comment_post=news1, comment_user=user1, comment_text='Комментария от пользователя user1')     
+comment5 = Comment.objects.create(comment_post=news2, comment_user=user2, comment_text='Комментария от пользователя user2') 
+
+article1.like()
+article1.like()
+article1.like()
+article1.dislike() 
+article1.dislike()
+article2.like()    
+article2.like()
+article2.like()
+article2.like()
+article2.dislike()  
+article2.dislike()
+article3.dislike() 
+article3.dislike()
+news1.dislike()    
+news1.dislike()
+news1.like()    
+news2.like() 
+comment1.like() 
+comment1.like()
+comment2.like() 
+comment3.dislike() 
+comment3.dislike()
+comment4.dislike() 
+comment4.like()    
+comment4.like()
+comment5.like() 
+
+author1.update_rating()
+author2.update_rating()
+
+Author.objects.order_by('-rating').values('user__username', 'rating')[0]
+
+Post.objects.order_by('-post_rating').values('post_author__user__username', 'post_rating', 'post_title', 'post_content')[0]
+
+
+best_post = Post.objects.order_by('-post_rating').values_list('id', flat=True)[0]
+Comment.objects.filter(comment_post = best_post).values('comment_date', 'comment_user', 'comment_rating', 'comment_text')
