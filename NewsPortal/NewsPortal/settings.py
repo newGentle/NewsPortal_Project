@@ -28,6 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'appointments',
 ]
 
 SITE_ID = 1
@@ -72,7 +74,7 @@ ROOT_URLCONF = 'NewsPortal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR / 'templates')],
+        'DIRS': [os.path.join(BASE_DIR / 'templates'), os.path.join(BASE_DIR / 'templates', 'allauth',)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,8 +158,15 @@ LOGOUT_REDIRECT_URL = '/accounts/login'
 
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = True
 
 ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignUpForm'}
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('ACC_LOGIN')
+EMAIL_HOST_PASSWORD = os.getenv('ACC_PASSWORD')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_OF_ADMIN')
