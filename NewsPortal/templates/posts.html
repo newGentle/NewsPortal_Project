@@ -46,7 +46,7 @@
                             {% endfor %} 
                         </td> 
                         <td>{{ item.post_content|truncatechars:20|censor }} </td>
-                        <td class='pe-0'><a href="/posts/{{item.id }}" class="btn btn-dark btn-sm"> Читать </a> </td>
+                        <td class='pe-0'><a href="{% url 'post_detail' item.id %}" class="btn btn-dark btn-sm"> Читать </a> </td>
                         
                     </tr>
                 </tbody>

@@ -12,3 +12,6 @@ class CustomSignUpForm(SignupForm):
         common_users = Group.objects.get(name='common_users')
         user.groups.add(common_users)
         return user
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)

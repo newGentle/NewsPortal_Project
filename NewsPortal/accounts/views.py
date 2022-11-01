@@ -7,5 +7,10 @@ from .forms import CustomSignUpForm
 class SignUp(CreateView):
     model = User
     form_class = CustomSignUpForm
-    success_url = '/acounts/login'
+    success_url = '/accounts/login'
     template_name = 'allauth/account/signup.html'
+
+class LoginView(CreateView):
+    model = User
+    form_class = CustomSignUpForm
+    success_url = 'posts_list'

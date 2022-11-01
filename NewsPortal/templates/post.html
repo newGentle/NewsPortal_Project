@@ -7,7 +7,12 @@
 {% endblock title %}
 
 {% block content %}
-
+    <div class='align-content-start'>
+        {% for item in post.categories.all %}
+            <a href='#' class='btn btn-success'>{{ item.category_name }}</a>
+        {% endfor %}
+        {% if is_subscribed %}{{ is_subscribed }}{% endif %} 
+    </div>
     <div class="card">
         <div class="card-header">
             <p class='fs-3'> {{ post.post_title|censor }} </p>
@@ -24,9 +29,9 @@
     {% if perms.news.change_post %}
         {% if same_post_author == request.user.id %}
             {% if 'NW' == post.post_type %}
-                <a href="news/{{post.id }}/update/" class="btn btn-success mt-3 w-40"> Редактировать </a>
+                <a href="{% url 'news_update' post.id %}" class="btn btn-success mt-3 w-40"> Редактировать </a>
             {% elif 'AR' == post.post_type %}
-                <a href="article/{{post.id }}/update/" class="btn btn-success mt-3 w-40"> Редактировать </a>
+                <a href="{% url 'article_update' post.id %}" class="btn btn-success mt-3 w-40"> Редактировать </a>
             {% endif %}
         {% endif %}
     {% endif %}

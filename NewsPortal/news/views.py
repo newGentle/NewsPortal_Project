@@ -32,7 +32,12 @@ class PostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['same_post_author'] = self.get_object().post_author.user.id
+        context['is_subscribed'] = Category.objects.filter(subscribe_cat__id=self.request.user.id)
         return context
+    
+    def add_sub(request):
+        
+        return request
 
 
 class NewsCreate(PermissionRequiredMixin, CreateView):

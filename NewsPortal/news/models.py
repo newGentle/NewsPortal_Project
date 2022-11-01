@@ -31,7 +31,7 @@ class Category(models.Model):
         (religion, 'Религия')
     ]
     category_name = models.CharField(max_length = 2, choices = CATS, default = politics, unique = True)
-
+    subscribe_cat = models.ManyToManyField(User)
     def __str__(self):
         return f'{self.get_category_name_display()}'
     
