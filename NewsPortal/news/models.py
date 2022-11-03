@@ -31,14 +31,14 @@ class Category(models.Model):
         (religion, 'Религия')
     ]
     category_name = models.CharField(max_length = 2, choices = CATS, default = politics, unique = True)
-    subscribe_cat = models.ManyToManyField(User)
+    subscribers = models.ManyToManyField(User, related_name='subscribers')
+    
     def __str__(self):
         return f'{self.get_category_name_display()}'
     
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-
 
 
 class Post(models.Model):   

@@ -7,18 +7,21 @@
 {% endblock title %}
 
 {% block content %}
-    <div class='align-content-start'>
-        {% for item in post.categories.all %}
-            <a href='#' class='btn btn-success'>{{ item.category_name }}</a>
-        {% endfor %}
-        {% if is_subscribed %}{{ is_subscribed }}{% endif %} 
-    </div>
     <div class="card">
         <div class="card-header">
             <p class='fs-3'> {{ post.post_title|censor }} </p>
             <p class='text-end fs-6'> Создан - {{ post.post_date|date:'d.M.Y' }} </p>
             <p class='text-end fs-6'> Автор - {{ post.post_author }} </p>
             <p class='text-end fs-6'> {{ post.get_post_type_display }} </p>
+           
+            {% for cat in post.categories.all %}
+                {% if cat in is_subscribed %}
+                    <p class='text-end fs-6'> {{ cat.get_category_name_display }} - <a href="{% url 'unsubscribe' cat.id %}" class='btn btn-secondary btn-sm'>Отписаться</a></p>
+                {% else %}
+                    <p class='text-end fs-6'> {{ cat.get_category_name_display }} - <a href="{% url 'subscribe' cat.id %}" class='btn btn-secondary btn-sm'>Подписаться</a></p>
+                {% endif %}
+            {% endfor %}
+            
         </div>
         <div class="card-body">
             <blockquote class="blockquote mb-0">

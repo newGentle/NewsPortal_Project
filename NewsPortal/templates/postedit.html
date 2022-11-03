@@ -30,11 +30,12 @@
             </div>
         </div>
         <input type="submit" value='Сохранить' class='me-5 mt-5 btn btn-success'>
+        
         {% if  'update' in request.path or 'delete' in request.path %}
             {% if 'article' in request.path %}
-                    <a href="{% url 'article_delete' form.id %}" class="btn btn-danger mt-5"> Удалить </a>
+                    <a href="{% url 'article_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
             {% elif 'news' in request.path %}
-                    <a href="{% url 'news_delete' form.id %}" class="btn btn-danger mt-5"> Удалить </a>
+                    <a href="{% url 'news_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
             {% endif %}
         {% endif %}
     </form>
