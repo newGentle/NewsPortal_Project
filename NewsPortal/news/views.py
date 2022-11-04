@@ -1,3 +1,4 @@
+import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
@@ -5,7 +6,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import PostForm
 from .filters import PostFilter
-from .models import  Category, Post
+from .models import  Category, Post, User
+from django.urls import resolve
 # Create your views here.
 
 class PostsList(ListView):
@@ -23,6 +25,9 @@ class PostsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
+        if (self.request.user in User.objects.all()):
+            context['author_posts'] = Post.objects.filter(post_author__user=self.request.user).filter(post_date__gte=datetime.datetime.today()-datetime.timedelta(hours=24)).count
+        # context['author_posts'] = datetime.time
         return context
 
 
@@ -40,6 +45,7 @@ class PostDetail(DetailView):
 @login_required
 def subscribe(request, *args, **kwargs):
     Category.objects.get(pk=int(kwargs['pk'])).subscribers.add(request.user.id)
+    
     return redirect('/')
 
 @login_required
@@ -59,10 +65,6 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['post_type'] = Post.CHOICE
         context['categories'] = Category.objects.all
-        # authors = Post.objects.filter(post_author__user__username=self.request.user.username).values_list('post_author__user__id', flat=True)
-        # user = self.request.user.id 
-        # if user in authors:
-        #     context['post_author'] = self.request.user
         return context
 
     def form_valid(self, form):

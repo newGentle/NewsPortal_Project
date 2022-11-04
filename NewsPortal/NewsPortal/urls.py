@@ -20,5 +20,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('news.urls'), name='posts'),
     path('accounts/', include('allauth.urls')),
-    path('send_mail/', include('appointments.urls', namespace='appointments'))
 ]

@@ -34,7 +34,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,7 +52,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
-    'appointments',
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -150,7 +149,6 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-
 LOGIN_REDIRECT_URL = 'posts_list'
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
@@ -159,7 +157,6 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-
 ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignUpForm'}
 
 EMAIL_HOST = os.getenv('EMAIL_HOST')
@@ -168,3 +165,11 @@ EMAIL_HOST_USER = os.getenv('ACC_LOGIN')
 EMAIL_HOST_PASSWORD = os.getenv('ACC_PASSWORD')
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_OF_ADMIN')
+
+# из за спамов был добавлен отладочный вариант отправки почты
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SITE_URL = '127.0.0.1:8000'
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds

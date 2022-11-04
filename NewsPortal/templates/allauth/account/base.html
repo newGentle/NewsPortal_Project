@@ -33,10 +33,7 @@
               </li>
             </ul>
           </div>
-          {% if perms.news.add_post %}
-            <a href="{% url 'news_create' %}" class="btn btn-dark btn-md" tabindex="-1" role="button" aria-disabled="true">| Создать Новость |</a>
-            <a href="{% url 'article_create' %}" class="btn btn-dark btn-md" tabindex="-1" role="button" aria-disabled="true">| Создать Статью |</a>
-          {% endif %}
+
           {% if user.is_authenticated %}
             <div class='text-white ms-1'>Привет, {{ user.username }}</div>
             <a href="/accounts/logout" class="btn btn-dark btn-md"  role="button" aria-disabled="true">| Выйти |</a>
