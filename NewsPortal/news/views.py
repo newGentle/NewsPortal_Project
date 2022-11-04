@@ -26,7 +26,9 @@ class PostsList(ListView):
         context = super().get_context_data(**kwargs)
         context['filterset'] = self.filterset
         if (self.request.user in User.objects.all()):
-            context['author_posts'] = Post.objects.filter(post_author__user=self.request.user).filter(post_date__gte=datetime.datetime.today()-datetime.timedelta(hours=24)).count
+            today = datetime.datetime.today()
+            today = today.replace(hour=0, minute=0, second=0)
+            context['author_posts'] = Post.objects.filter(post_author__user=self.request.user).filter(post_date__gte=(today)).count
         # context['author_posts'] = datetime.time
         return context
 

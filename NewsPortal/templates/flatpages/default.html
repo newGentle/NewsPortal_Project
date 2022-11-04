@@ -28,20 +28,8 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'posts_list' %}">Посты</a>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'search' %}">Поиск</a>
-                    </li>
                   </ul>
                 </div>
-           
-                    {% if perms.news.add_post %}
-                        {% if author_posts >= 3 %}
-                            <p class='bg-light text-dark p-2 mb-2 mt-2 me-2'>За сегодня Вы создали 3 поста </p>
-                        {% else %}
-                            <a href="{% url 'news_create' %}" class="btn btn-dark btn-md" tabindex="-1" role="button" aria-disabled="true">| Создать Новость |</a>
-                            <a href="{% url 'article_create' %}" class="btn btn-dark btn-md" tabindex="-1" role="button" aria-disabled="true">| Создать Статью |</a>
-                        {% endif %}
-                    {% endif %}
            
                 {% if user.is_authenticated %}
                   <div class='text-white ms-1'>Привет, {{ user.username }} </div>
@@ -53,11 +41,9 @@
               </div>
         </nav>
         <!-- Page content-->
-        <div class="container">
-            <div class="text-center mt-5">
-                {% block content %}{% endblock content %}
-            </div>
-        </div>
-
+        
+                {% block content %}
+                {% block extra %}{% endblock extra %}
+                {% endblock content %}
     </body>
 </html>
