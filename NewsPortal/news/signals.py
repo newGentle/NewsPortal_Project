@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from .models import PostCategory, Post
-from NewsPortal.settings import DEFAULT_FROM_EMAIL, SITE_URL
+from django.conf import settings
 from django.shortcuts import get_object_or_404
  
 
@@ -24,16 +24,16 @@ def notify_subscribers(sender, instance, **kwargs):
             template_name='subscribers_email_notify.html',
             context={
                 'text': instance.preview(),
-                'post_link': f'{SITE_URL}/{instance.id}',
+                'post_link': f'{settings.SITE_URL}/{instance.id}',
                 'username': username,
             }
         )
         msg = EmailMultiAlternatives(
             subject=instance.post_title,
-            from_email=DEFAULT_FROM_EMAIL,
+            from_email=settings.DEFAULT_FROM_EMAIL,
             to=subscribers,
         )
-
+        
         msg.attach_alternative(html_content, 'text/html')
         msg.send()
 

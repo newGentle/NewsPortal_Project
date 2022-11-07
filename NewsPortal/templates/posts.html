@@ -10,19 +10,21 @@
     <div class="container-lg">
         <div class="row">
             <div class="col-3">
-                <div class="row mb-4 p-3">
+                <div class="row mb-1 p-4">
                     {% block extra %}
                         {% if perms.news.add_post %}
+                        <p class='bg-light text-dark p-2 mb-2 mt-2 me-2 text-center'>За сегодня Вы создали постов: {{ author_posts }}</p>
                             {% if author_posts >= 3 %}
-                                <p class='bg-dark text-light p-2 mb-2 mt-2 me-2'>За сегодня Вы создали 3 поста </p>
+                                <a href="{% url 'news_create' %}" class="btn btn-dark btn-sm m-1 ms-1 disabled" tabindex="-1" role="button" aria-disabled="true"> Создать Новость </a>
+                                <a href="{% url 'article_create' %}" class="btn btn-dark btn-sm m-1 ms-1 disabled" tabindex="-1" role="button" aria-disabled="true"> Создать Статью </a>
                             {% else %}
-                                <a href="{% url 'news_create' %}" class="btn btn-primary btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> Создать Новость </a>
-                                <a href="{% url 'article_create' %}" class="btn btn-primary btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> Создать Статью </a>
+                                <a href="{% url 'news_create' %}" class="btn btn-dark btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> Создать Новость </a>
+                                <a href="{% url 'article_create' %}" class="btn btn-dark btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> Создать Статью </a>
                             {% endif %}
                         {% endif %}
                     {% endblock extra %}
                 </div>
-                <div class="row mt-4 p-3">
+                <div class="row p-3">
                     <div class="card border-0 border-end">
                         <div class="card-header">
                             <h2 class="display-6">Поиск</h2>
@@ -31,7 +33,7 @@
                         <div class="card-body p-0 mt-4">
                             <form action="" method='get' class='form form-inline'>
                                 {{ filterset.form.as_table }}
-                                <input type="submit" value='найти' class='btn btn-primary mt-4 mb-4 form-control' />
+                                <input type="submit" value='найти' class='btn btn-dark mt-4 mb-4 form-control' />
                             </form>
                         </div>
                     </div>
@@ -39,9 +41,9 @@
             </div>
 
             <div class="col-9 text-align-center">
-                <h2 class="display-5">ВСЕ ПОСТЫ</h2>
+                <h2 class="display-5 text-center">ВСЕ ПОСТЫ</h2>
                 {% if posts %}
-                    <table class='table'>
+                    <table class='table text-center'>
                         <thead>
                             <tr>
                                 <th scope='col'>Заголовок</th>

@@ -29,7 +29,7 @@ def my_job():
         template_name='subscribers_email_notify_weekly.html',
         context={
         'posts': posts,
-        'posts_link': settings.SITE_URL,
+        'posts_link': f'{settings.SITE_URL}',
         'username': username,
         }
 
@@ -73,7 +73,7 @@ class Command(BaseCommand):
 
     scheduler.add_job(
       my_job,
-      trigger=CronTrigger(day_of_week='mon', hour='09', minute='00'),  # Every 10 seconds
+      trigger=CronTrigger(second='10'),  # Every 10 seconds day_of_week='mon', hour='09', minute='00'
       id="my_job",  # The `id` assigned to each job MUST be unique
       max_instances=1,
       replace_existing=True,

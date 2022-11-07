@@ -12,14 +12,14 @@ class PostFilter(FilterSet):
         field_name='post_date', 
         label='С', 
         lookup_expr='gt', 
-        widget=DateInput(attrs={'type': 'date', 'class': 'me-2 form-control'})
+        widget=DateInput(attrs={'type': 'date', 'class': 'me-2 mb-2 form-control'})
         )
  
     post_date_lt = django_filters.DateFilter(
         field_name='post_date', 
         label='По', 
         lookup_expr='lt', 
-        widget=DateInput(attrs={'type': 'date', 'class': 'me-2 form-control'})
+        widget=DateInput(attrs={'type': 'date', 'class': 'me-2 mb-2 form-control'})
         )
 
     categories = django_filters.ModelChoiceFilter(
@@ -28,11 +28,17 @@ class PostFilter(FilterSet):
         queryset=Category.objects.all(),
         label='Категория',
         empty_label = 'Все',
-        
     )
+
     class Meta:
         model = Post
         fields = []
+    
+    def __init__(self, *args, **kwargs):
+        super(PostFilter, self).__init__(*args, **kwargs)
+        self.categories = Category.objects.all()
+        self.filters['categories'].queryset = Category.objects.all()
+        self.form.fields['categories'].widget.attrs.update({'class': 'form-control'})
     
         
         

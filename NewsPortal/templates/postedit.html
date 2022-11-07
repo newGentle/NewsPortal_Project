@@ -12,32 +12,36 @@
 {% endblock title %}
 
 {% block content %}
-<div display='block' class='ms-5 me-5 ps-5 pe-5'>
-    <form action="" method='post'>
-        {% csrf_token %}
-        <div class="row">
-            <div class='mt-2 mb-2'>
-                {{ form.post_title|as_crispy_field}}
-            </div>
-            <div class='mt-2 mb-5'>
-                {{ form.post_content|as_crispy_field}}
-            </div>
-            <div class="col-6">
-                {{ form.categories|as_crispy_field}}
-            </div>
-            <div class="col-6">
-                {{ form.post_author|as_crispy_field }}
-            </div>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class='col-6'>
+            <form action="" method='post'>
+                {% csrf_token %}
+                <div class="row">
+                    <div class='mt-2 mb-2'>
+                        {{ form.post_title|as_crispy_field}}
+                    </div>
+                    <div class='mt-2 mb-5'>
+                        {{ form.post_content|as_crispy_field}}
+                    </div>
+                    <div class="col-6">
+                        {{ form.categories|as_crispy_field}}
+                    </div>
+                    <div class="col-6">
+                        {{ form.post_author|as_crispy_field }}
+                    </div>
+                </div>
+                <input type="submit" value='Сохранить' class='me-5 mt-5 btn btn-success'>
+                
+                {% if  'update' in request.path or 'delete' in request.path %}
+                    {% if 'article' in request.path %}
+                            <a href="{% url 'article_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
+                    {% elif 'news' in request.path %}
+                            <a href="{% url 'news_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
+                    {% endif %}
+                {% endif %}
+            </form>
         </div>
-        <input type="submit" value='Сохранить' class='me-5 mt-5 btn btn-success'>
-        
-        {% if  'update' in request.path or 'delete' in request.path %}
-            {% if 'article' in request.path %}
-                    <a href="{% url 'article_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
-            {% elif 'news' in request.path %}
-                    <a href="{% url 'news_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
-            {% endif %}
-        {% endif %}
-    </form>
+    </div>
 </div>
 {% endblock content %}

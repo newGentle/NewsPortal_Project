@@ -9,7 +9,7 @@
 {% block content %}
     <div class="container-md mt-3">
     <div class="card">
-        <div class="card-header">
+        <div class="card-header text-center">
             <p class='fs-3'> {{ post.post_title|censor }} </p>
            
             
@@ -19,10 +19,11 @@
                 <p> {{ post.post_content|censor }} </p>
             </blockquote>
         </div>
+        <hr>
         <div class="card-body">
-            <p class='fs-6'> Создан - {{ post.post_date|date:'d.M.Y' }} 
-             Автор - {{ post.post_author }} 
-            {{ post.get_post_type_display }} </p>
+            <p class='fs-6'> Создан - {{ post.post_date|date:'d.M.Y' }},  
+             Автор - {{ post.post_author }}, 
+            ({{ post.get_post_type_display }}) </p>
            
             {% for cat in post.categories.all %}
                 {% if cat in is_subscribed %}
@@ -44,6 +45,6 @@
     {% endif %}
 
     {% comment %} {{request.META.HTTP_REFERER|escape}} Добавить ссылку назад {% endcomment %}
-    <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-success mt-3 w-40"> Назад </a>
+    <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-dark mt-3 w-40"> Назад </a>
 </div>
 {% endblock content %}

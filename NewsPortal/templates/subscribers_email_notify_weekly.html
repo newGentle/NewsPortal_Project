@@ -10,7 +10,7 @@
     <h2>Здравствуйте, {{ username }}. Все посты за неделю по Вашей подписке</h2>
     <ol>
         {% for item in posts %}
-        <li><a href="{{ posts_link }}">{{ item.post_title }}</a></li>
+        <li><a href="{{ posts_link }}/{{ item.id }}">{{ item.post_title }}</a></li>
         {% endfor %}
 
     </ol>
