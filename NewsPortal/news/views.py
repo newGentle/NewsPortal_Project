@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .forms import PostForm
 from .filters import PostFilter
 from .models import  Category, Post, User
+from .tasks import new_post_notify
 from django.urls import resolve
 # Create your views here.
 
@@ -29,7 +30,6 @@ class PostsList(ListView):
             today = datetime.datetime.today()
             today = today.replace(hour=0, minute=0, second=0)
             context['author_posts'] = Post.objects.filter(post_author__user=self.request.user).filter(post_date__gte=(today)).count
-            
         # context['author_posts'] = datetime.time
         return context
 
@@ -44,6 +44,7 @@ class PostDetail(DetailView):
         context['same_post_author'] = self.get_object().post_author.user.id
         context['is_subscribed'] = Category.objects.filter(subscribers=self.request.user.id)
         return context
+
 
 @login_required
 def subscribe(request, *args, **kwargs):
@@ -72,7 +73,8 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         post = form.save(commit=False)
-        post.post_type = Post.news 
+        post.post_type = Post.news
+        new_post_notify.apply_async([post.pk], countdown = 60)
         return super().form_valid(form)
 
 class ArticleCreate(PermissionRequiredMixin, CreateView):
@@ -90,7 +92,8 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         post = form.save(commit=False)
-        post.post_type = Post.article 
+        post.post_type = Post.article
+        new_post_notify.apply_async([post.pk], countdown = 60)
         return super().form_valid(form)
 
     
@@ -100,7 +103,7 @@ class PostUpdate(PermissionRequiredMixin, UpdateView):
     model = Post
     template_name = 'postedit.html'
     success_url = reverse_lazy('posts_list')
-    
+
 
 class PostDelete(PermissionRequiredMixin, DeleteView):
     permission_required = ('news.delete_post')

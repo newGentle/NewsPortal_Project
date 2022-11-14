@@ -2,13 +2,21 @@ from django.contrib import admin
 from .models import Post, Category, Author, PostCategory
 # Register your models here.
 
-class role_inline(admin.TabularInline):
+
+class PostCategoryInline(admin.TabularInline):
     model = PostCategory
     extra = 1
 
-class postAdmin(admin.ModelAdmin):
-    inlines = (role_inline,)
+class PostAdmin(admin.ModelAdmin):
+    inlines = (PostCategoryInline,)
+    list_display = ("post_title", "preview",)
+    list_filter = ("post_date",)
+    fields = ('post_title', 'post_content', 'post_author', 'post_type')
 
-admin.site.register(Post, postAdmin)
+class CategoryAdmin(admin.ModelAdmin):
+    inlines = (PostCategoryInline,)
+
+admin.site.register(Post, PostAdmin)
+    
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Author)
-admin.site.register(Category)
