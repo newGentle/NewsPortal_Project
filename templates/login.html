@@ -1,0 +1,11 @@
+{% extends 'flatpages/default.html' %}
+{% load socialaccount %}
+{% block content %}
+{% csrf_token %}
+<form action="" method='post'>
+    {{ form|crispy }}
+    <input type="submit" value='login'>
+    <input type="hidden" name='next' value='{{ next }}'>
+</form>
+{% endblock content %}
+

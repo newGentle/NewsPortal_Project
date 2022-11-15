@@ -1,0 +1,49 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+    Пост  
+{% endblock title %}
+
+{% block content %}
+    <div class="container-md mt-3">
+    <div class="card">
+        <div class="card-header">
+            <p class='fs-3'> {{ post.post_title|censor }} </p>
+           
+            
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <p> {{ post.post_content|censor }} </p>
+            </blockquote>
+        </div>
+        <div class="card-body">
+            <p class='fs-6'> Создан - {{ post.post_date|date:'d.M.Y' }} 
+             Автор - {{ post.post_author }} 
+            {{ post.get_post_type_display }} </p>
+           
+            {% for cat in post.categories.all %}
+                {% if cat in is_subscribed %}
+                    <p class='fs-6'> {{ cat.get_category_name_display }} - <a href="{% url 'unsubscribe' cat.id %}" class='btn btn-secondary btn-sm'>Отписаться</a></p>
+                {% else %}
+                    <p class='fs-6'> {{ cat.get_category_name_display }} - <a href="{% url 'subscribe' cat.id %}" class='btn btn-secondary btn-sm'>Подписаться</a></p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% if perms.news.change_post %}
+        {% if same_post_author == request.user.id %}
+            {% if 'NW' == post.post_type %}
+                <a href="{% url 'news_update' post.id %}" class="btn btn-success mt-3 w-40"> Редактировать </a>
+            {% elif 'AR' == post.post_type %}
+                <a href="{% url 'article_update' post.id %}" class="btn btn-success mt-3 w-40"> Редактировать </a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {% comment %} {{request.META.HTTP_REFERER|escape}} Добавить ссылку назад {% endcomment %}
+    <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-success mt-3 w-40"> Назад </a>
+</div>
+{% endblock content %}
