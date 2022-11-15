@@ -16,6 +16,10 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.user}'
     
+    class Meta:
+        verbose_name = 'Автор'
+        verbose_name_plural = 'Авторы'
+    
  
 class Category(models.Model):
     politics = 'PO'
