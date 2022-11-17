@@ -74,6 +74,7 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.post_type = Post.news
+        post.save()
         new_post_notify.apply_async([post.pk], countdown = 60)
         return super().form_valid(form)
 
@@ -93,6 +94,7 @@ class ArticleCreate(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.post_type = Post.article
+        post.save()
         new_post_notify.apply_async([post.pk], countdown = 60)
         return super().form_valid(form)
 
