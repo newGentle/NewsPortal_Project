@@ -60,6 +60,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,6 +147,9 @@ USE_I18N = True
 
 USE_TZ = False
 
+LOCALE_PATH = [
+    os.path(BASE_DIR, 'locale')
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -317,6 +321,5 @@ LOGGING = {
             'handlers': ['file_S'],
             'propagate': True,
         },
-        
     },
 }
