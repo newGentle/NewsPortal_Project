@@ -6,10 +6,11 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import PostForm
 from .filters import PostFilter
-from .models import  Category, Post, User
+from .models import Category, Post, User
 from .tasks import new_post_notify
-from django.urls import resolve
+from django.utils.translation import gettext as _
 # Create your views here.
+
 
 class PostsList(ListView):
     model = Post
