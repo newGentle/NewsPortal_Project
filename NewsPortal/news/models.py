@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Author(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
-    rating = models.IntegerField(default = 0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
 
     def update_rating(self):
         pRating = sum(Post.objects.filter(post_author=self).values_list('post_rating', flat=True))
@@ -12,15 +13,15 @@ class Author(models.Model):
 
         self.rating = pRating * 3 + cRating + pcRating
         self.save()
-    
+
     def __str__(self):
         return f'{self.user}'
-    
+
     class Meta:
         verbose_name = 'Автор'
         verbose_name_plural = 'Авторы'
-    
- 
+
+
 class Category(models.Model):
     politics = 'PO'
     sport = 'SP'

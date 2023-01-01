@@ -5,23 +5,24 @@ from .models import User
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from allauth.account.signals import email_confirmed
+from django.utils.translation import gettext as _
  
 @receiver(email_confirmed)
 def email_confirmed_(request, email_address, **kwargs):
-    user = User.objects.get(email = email_address.email)
+    user = User.objects.get(email=email_address.email)
     user.is_active = True
     user.save()
 
     html_content = render_to_string(
             template_name='greeting_user.html',
             context={
-            'user': user.username,
-            'site_url': f'{settings.SITE_URL}'
-            }
+                'user': user.username,
+                'site_url': f'{settings.SITE_URL}'
+                }
 
             )
     send_mail(
-        subject='Добро пожаловать в наш МИР',
+        subject=_('Добро пожаловать в наш МИР'),
         message='',
         from_email=settings.DEFAULT_FROM_EMAIL,
         recipient_list=(user.email, ),
@@ -58,4 +59,3 @@ def email_confirmed_(request, email_address, **kwargs):
 
 #         msg.attach_alternative(html_content, 'text/html')
 #         msg.send()
-

@@ -3,6 +3,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django.forms import ValidationError
 from .models import Post
+from django.utils.translation import gettext as _
+
 
 class PostForm(forms.ModelForm):
     post_title = forms.CharField(label='Название', widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -17,8 +19,8 @@ class PostForm(forms.ModelForm):
             'post_author',
         ]
         labels = {
-            'post_author': 'Автор',
-            'categories': 'Категория',
+            'post_author': _('Автор'),
+            'categories': _('Категория'),
         }
 
     def clean(self):
@@ -26,5 +28,5 @@ class PostForm(forms.ModelForm):
         content = cleaned.get('post_content')
         title = cleaned.get('post_title')
         if title == content:
-            raise ValidationError('Название и контент не должны быть одинаковыми')
+            raise ValidationError(_('Название и контент не должны быть одинаковыми'))
         return cleaned

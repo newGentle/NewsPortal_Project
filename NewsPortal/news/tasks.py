@@ -4,6 +4,7 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 from celery import shared_task
+from django.utils.translation import gettext as _
 
 @shared_task
 def weekly_notify(*args, **kwargs):
@@ -21,14 +22,14 @@ def weekly_notify(*args, **kwargs):
         html_content = render_to_string(
             template_name='subscribers_email_notify_weekly.html',
             context={
-            'posts': posts.filter(categories__subscribers=UID),
-            'posts_link': settings.SITE_URL,
-            'username': name,
+                'posts': posts.filter(categories__subscribers=UID),
+                'posts_link': settings.SITE_URL,
+                'username': name,
             }
 
             )
         send_mail(
-            subject='Посты за неделю',
+            subject=_('Посты за неделю'),
             message='',
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=(subn,),

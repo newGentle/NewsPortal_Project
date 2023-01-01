@@ -14,3 +14,4 @@ def change_url(request):
     url = request.path
     url = url.split('/')
     return url[2]
+    
