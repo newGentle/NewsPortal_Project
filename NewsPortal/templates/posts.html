@@ -1,9 +1,11 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 {% load crispy_forms_tags %}
 {% load custom_filters %}
 {% load custom_tags %}
+
 {% block title %}
-    Посты   
+{% trans 'Посты' noop %}
 {% endblock title %}
 {% block content %}
 {% comment %} {% if 'search' in request.path %} {% endcomment %}

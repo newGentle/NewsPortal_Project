@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-01 20:38+0500\n"
+"POT-Creation-Date: 2023-01-03 21:16+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+#: .\NewsPortal\settings.py:143
+msgid "English"
+msgstr ""
+
+#: .\NewsPortal\settings.py:144
+msgid "Russian"
+msgstr ""
 
 #: .\news\filters.py:10
 msgid "Название"
@@ -147,4 +154,12 @@ msgid ""
 "finalize the signup process. If you do not see the verification e-mail in "
 "your main inbox, check your spam folder. Please contact us if you do not "
 "receive the verification e-mail within a few minutes."
+msgstr ""
+
+#: .\templates\flatpages\default.html:28
+msgid "Main"
+msgstr "Главная"
+
+#: .\templates\posts.html:8
+msgid "Посты"
 msgstr ""
