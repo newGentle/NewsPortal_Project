@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SKillFactory</title>
 </head>
 <body>
     {% load account %}
-    <h1> {{ user }}, Поздравляем Вас с успешной регистрацией !!! </h1>
-    <h3> Переход на наш <a href="{{ site_url }}"> САЙТ </a> </h3>
+    <h1> {{ user }}, {% translate 'Поздравляем Вас с успешной регистрацией !!! ' %}</h1>
+    <h3> {% blocktranslate %} Переход на наш <a href="{{ site_url }}"> САЙТ </a> {% endblocktranslate %} </h3>
 </body>
 </html>

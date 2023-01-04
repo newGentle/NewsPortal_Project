@@ -1,11 +1,10 @@
 {% extends 'flatpages/default.html' %}
-{% load i18n %}
 {% load crispy_forms_tags %}
 {% load custom_filters %}
 {% load custom_tags %}
-
+{% load i18n %}
 {% block title %}
-{% trans 'Посты' noop %}
+    {% translate 'Посты' %}
 {% endblock title %}
 {% block content %}
 {% comment %} {% if 'search' in request.path %} {% endcomment %}
@@ -16,10 +15,10 @@
                     {% block extra %}
                         {% if perms.news.add_post %}
                             {% if author_posts >= 3 %}
-                                <p class='bg-dark text-light p-2 mb-2 mt-2 me-2'>За сегодня Вы создали 3 поста </p>
+                                <p class='bg-dark text-light p-2 mb-2 mt-2 me-2'>{% translate 'За сегодня Вы создали 3 поста' %} </p>
                             {% else %}
-                                <a href="{% url 'news_create' %}" class="btn btn-primary btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> Создать Новость </a>
-                                <a href="{% url 'article_create' %}" class="btn btn-primary btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> Создать Статью </a>
+                                <a href="{% url 'news_create' %}" class="btn btn-primary btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> {% translate 'Создать Новость' %} </a>
+                                <a href="{% url 'article_create' %}" class="btn btn-primary btn-sm m-1" tabindex="-1" role="button" aria-disabled="true"> {% translate 'Создать Статью' %} </a>
                             {% endif %}
                         {% endif %}
                     {% endblock extra %}
@@ -27,13 +26,13 @@
                 <div class="row mt-4 p-3">
                     <div class="card border-0 border-end">
                         <div class="card-header">
-                            <h2 class="display-6">Поиск</h2>
+                            <h2 class="display-6">{% translate 'Поиск' %}</h2>
                         </div>
 
                         <div class="card-body p-0 mt-4">
                             <form action="" method='get' class='form form-inline'>
                                 {{ filterset.form.as_table }}
-                                <input type="submit" value='найти' class='btn btn-primary mt-4 mb-4 form-control' />
+                                <input type="submit" value={% translate 'найти' %} class='btn btn-primary mt-4 mb-4 form-control' />
                             </form>
                         </div>
                     </div>
@@ -41,16 +40,16 @@
             </div>
 
             <div class="col-9 text-align-center">
-                <h2 class="display-5">ВСЕ ПОСТЫ</h2>
+                <h2 class="display-5">{% translate 'ВСЕ ПОСТЫ' %}</h2>
                 {% if posts %}
                     <table class='table'>
                         <thead>
                             <tr>
-                                <th scope='col'>Заголовок</th>
-                                <th scope='col'>Дата публикации</th>
-                                <th scope='col'>Тип поста</th>
-                                <th scope='col'>Категории </th>
-                                <th scope='col'>Контент</th>
+                                <th scope='col'>{% translate 'Заголовок' %}</th>
+                                <th scope='col'>{% translate 'Дата публикации' %}</th>
+                                <th scope='col'>{% translate 'Тип поста' %}</th>
+                                <th scope='col'>{% translate 'Категории' %}</th>
+                                <th scope='col'>{% translate 'Контент' %}</th>
                             </tr>
                         </thead>
                         {% for item in posts %}
@@ -65,7 +64,7 @@
                                         {% endfor %} 
                                     </td> 
                                     <td>{{ item.post_content|truncatechars:20|censor }} </td>
-                                    <td class='pe-0'><a href="{% url 'post_detail' item.id %}" class="btn btn-dark btn-sm"> Читать </a> </td>
+                                    <td class='pe-0'><a href="{% url 'post_detail' item.id %}" class="btn btn-dark btn-sm"> {% translate 'Читать' %} </a> </td>
                                     
                                 </tr>
                             </tbody>
@@ -75,14 +74,14 @@
                     {% if page_obj %}
                         <ul class="pagination justify-content-center">
                             {% if page_obj.number == 1 %}
-                                <li class="page-item disabled"><a class="page-link" href="?{% url_replace page=1 %}">Начало</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="?{% url_replace page=1 %}">{% translate 'Начало' %}</a></li>
                             {% else %}
-                                <li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}">Начало</a></li>
+                                <li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}">{% translate 'Начало' %}</a></li>
                             {% endif %}
                             {% if page_obj.has_previous %}
-                                <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">Пред.</a></li>
+                                <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}">{% translate 'Пред.' %}</a></li>
                             {% else %}
-                                <li class="page-item disabled"><a class="page-link" href="#">Пред.</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">{% translate 'Пред.' %}</a></li>
                             {% endif %}
 
                             {% if page_obj.has_previous and page_obj.previous_page_number == 1 %}
@@ -105,21 +104,21 @@
                             {% endif %}
 
                             {% if page_obj.has_next %}
-                                <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">След.</a></li>
+                                <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.next_page_number %}">{% translate 'След.' %}</a></li>
                             {% else %}
-                                <li class="page-item disabled"><a class="page-link" href="#">След.</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">{% translate 'След.' %}</a></li>
                             {% endif %}
                             {% if page_obj.number == page_obj.paginator.num_pages %}
-                                <li class="page-item disabled"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">Конец</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">{% translate 'Конец' %}</a></li>
                             {% else %}
-                            <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">Конец</a></li>
+                            <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.paginator.num_pages %}">{% translate 'Конец' %}</a></li>
                             {% endif %}
 
                         </ul>
                     {% endif %}
 
                 {% else %}
-                    <h2>Нет Постов</h2>
+                    <h2>{% translate 'Нет постов' %}</h2>
                 {% endif %}
             </div>
         </div>
