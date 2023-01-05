@@ -1,13 +1,13 @@
 {% extends 'flatpages/default.html' %}
-
+{% load i18n %}
 {% block title %}
-    Удалить Пост
+    {% translate 'Удалить Пост' %}
 {% endblock title %}
 
 {% block content %}
 <form action="" method='post'>
     {% csrf_token %}
-    <p>Удалить '{{ object.post_title }}'</p>
-    <input type="submit" value='Удалить' class='btn btn-danger'>
+    <p> {% translate 'Удалить' %} '{{ object.post_title }}'</p>
+    <input type="submit" value={% translate 'Удалить' %} class='btn btn-danger'>
 </form>
 {% endblock content %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-04 18:14+0500\n"
+"POT-Creation-Date: 2023-01-06 00:35+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\news\apps.py:7
+msgctxt "Новости"
+msgid "Новости"
+msgstr "News"
 
 #: .\news\filters.py:10
 msgid "Название"
@@ -54,6 +59,71 @@ msgstr "Author"
 msgid "Название и контент не должны быть одинаковыми"
 msgstr "Title and Content must be different"
 
+#: .\news\models.py:22
+msgctxt "Автор"
+msgid "Автор"
+msgstr "Author"
+
+#: .\news\models.py:23
+msgctxt "Авторы"
+msgid "Авторы"
+msgstr "Authors"
+
+#: .\news\models.py:33
+msgctxt "Политика"
+msgid "Политика"
+msgstr "Politics"
+
+#: .\news\models.py:34
+msgctxt "Спорт"
+msgid "Спорт"
+msgstr "Sport"
+
+#: .\news\models.py:35
+msgctxt "Наука"
+msgid "Наука"
+msgstr "Science"
+
+#: .\news\models.py:36
+msgctxt "Образование"
+msgid "Образование"
+msgstr "Education"
+
+#: .\news\models.py:37
+msgctxt "Религия"
+msgid "Религия"
+msgstr "Religion"
+
+#: .\news\models.py:47
+msgctxt "Категория"
+msgid "Категория"
+msgstr "Category"
+
+#: .\news\models.py:48
+msgctxt "Категории"
+msgid "Категории"
+msgstr "Categories"
+
+#: .\news\models.py:55
+msgctxt "Новость"
+msgid "Новость"
+msgstr "News"
+
+#: .\news\models.py:56
+msgctxt "Статья"
+msgid "Статья"
+msgstr "Article"
+
+#: .\news\models.py:83
+msgctxt "Пост"
+msgid "Пост"
+msgstr "Post"
+
+#: .\news\models.py:84
+msgctxt "Посты"
+msgid "Посты"
+msgstr "Posts"
+
 #: .\news\signals.py:25
 msgid "Добро пожаловать в наш МИР"
 msgstr "Welcome to our WORLD"
@@ -64,11 +134,45 @@ msgstr "weekly posts"
 
 #: .\templates\403.html:8 .\templates\403.html:12
 msgid "Доступ Запрещен"
-msgstr ""
+msgstr "Access denied"
 
 #: .\templates\403.html:13
 msgid "Обратитесь к администратору для получения доступа"
-msgstr ""
+msgstr "contact to administrator for access"
+
+#: .\templates\allauth\account\base.html:27
+#: .\templates\flatpages\default.html:27
+msgid "Главная"
+msgstr "Main"
+
+#: .\templates\allauth\account\base.html:30
+#: .\templates\flatpages\default.html:30 .\templates\posts.html:7
+msgid "Посты"
+msgstr "Posts"
+
+#: .\templates\allauth\account\base.html:36
+#: .\templates\flatpages\default.html:36
+msgid "Привет"
+msgstr "Hi"
+
+#: .\templates\allauth\account\base.html:37
+#: .\templates\flatpages\default.html:38
+msgid "| Выйти |"
+msgstr "| Sign Out |"
+
+#: .\templates\allauth\account\base.html:39
+#: .\templates\flatpages\default.html:40
+msgid "| Войти |"
+msgstr "| Sign In |"
+
+#: .\templates\allauth\account\email\email_confirmation_signup_message.html:12
+msgid "Спасибо за регистрацию"
+msgstr "Thanks for registration"
+
+#: .\templates\allauth\account\email\email_confirmation_signup_message.html:13
+#, python-format
+msgid " Пройдите по <a href=\"%(activate_url)s\">ссылке</a> для активации "
+msgstr "Click <a href=\"%(activate_url)s\">link</a> for activation"
 
 #: .\templates\allauth\account\email\email_confirmation_subject.txt:3
 msgid "Skillfactory sends it's regards "
@@ -101,6 +205,16 @@ msgstr ""
 #: .\templates\allauth\account\login.html:53
 msgid "Sign In"
 msgstr ""
+
+#: .\templates\allauth\account\login.html:13
+#, python-format
+msgid ""
+" Пожалуйста, войдите с одним из ваших внешних аккаунтов. <br> Или <a href="
+"\"%(signup_url)s\">зарегистрируйтесь</a>  и авторизуйтесь на сайте "
+"%(site.name)s: "
+msgstr ""
+"Please sign in with one of your existing third party accounts. Or, <a href="
+"\"%(signup_url)s\">sign up</a> for a %(site.name)s account and sign in below:"
 
 #: .\templates\allauth\account\login.html:35
 msgid "or"
@@ -155,26 +269,6 @@ msgid ""
 "receive the verification e-mail within a few minutes."
 msgstr ""
 
-#: .\templates\flatpages\default.html:27
-msgid "Главная"
-msgstr "Main"
-
-#: .\templates\flatpages\default.html:30 .\templates\posts.html:7
-msgid "Посты"
-msgstr "Posts"
-
-#: .\templates\flatpages\default.html:36
-msgid "Привет"
-msgstr "Hi"
-
-#: .\templates\flatpages\default.html:38
-msgid "| Выйти |"
-msgstr "| Sign Out |"
-
-#: .\templates\flatpages\default.html:40
-msgid "| Войти |"
-msgstr "| Sign In |"
-
 #: .\templates\greeting_user.html:11
 msgid "Поздравляем Вас с успешной регистрацией !!! "
 msgstr "Congratulations on your successful registration !!!"
@@ -207,6 +301,23 @@ msgstr "Edit"
 #: .\templates\post.html:48
 msgid "Назад"
 msgstr "Back"
+
+#: .\templates\postdelete.html:4
+msgid "Удалить Пост"
+msgstr "Delete post"
+
+#: .\templates\postdelete.html:10 .\templates\postdelete.html:11
+#: .\templates\postedit.html:37 .\templates\postedit.html:39
+msgid "Удалить"
+msgstr "Delete"
+
+#: .\templates\postedit.html:8
+msgid "Статья"
+msgstr "Article"
+
+#: .\templates\postedit.html:10
+msgid "Новость"
+msgstr "News"
 
 #: .\templates\posts.html:19
 msgid "За сегодня Вы создали 3 поста"
@@ -275,3 +386,17 @@ msgstr "End"
 #: .\templates\posts.html:122
 msgid "Нет постов"
 msgstr "No posts"
+
+#: .\templates\subscribers_email_notify.html:11
+#, python-format
+msgid ""
+" Здравствуйте, %(username)s. Новый <a href=\"%(post_link)s\">пост</a> в "
+"Вашем любимом разделе! "
+msgstr ""
+"Hi, %(username)s. There is new <a href=\"%(post_link)s\">post</a> in your "
+"favour caetgory"
+
+#: .\templates\subscribers_email_notify_weekly.html:11
+#, python-format
+msgid " Здравствуйте, %(username)s. Все посты за неделю по Вашей подписке "
+msgstr "Hi, %(username)s. All weekly posts of your subscribed categories"

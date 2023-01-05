@@ -1,12 +1,13 @@
 {% extends 'flatpages/default.html' %}
 {% load crispy_forms_tags %}
 {% load custom_tags %}
+{% load i18n %}
 {% block title %}
 
 {% if 'article' in request.path %}
-    Статья
+    {% translate 'Статья' %}
 {% else %}
-    Новость
+    {% translate 'Новость' %}
 {% endif %}
 
 {% endblock title %}
@@ -33,9 +34,9 @@
         
         {% if  'update' in request.path or 'delete' in request.path %}
             {% if 'article' in request.path %}
-                    <a href="{% url 'article_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
+                    <a href="{% url 'article_delete' post.id %}" class="btn btn-danger mt-5"> {% translate 'Удалить' %} </a>
             {% elif 'news' in request.path %}
-                    <a href="{% url 'news_delete' post.id %}" class="btn btn-danger mt-5"> Удалить </a>
+                    <a href="{% url 'news_delete' post.id %}" class="btn btn-danger mt-5"> {% translate 'Удалить' %} </a>
             {% endif %}
         {% endif %}
     </form>

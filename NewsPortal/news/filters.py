@@ -3,7 +3,7 @@ from django.forms import DateInput
 from django_filters import FilterSet
 import django_filters
 from .models import Category, Post
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 
 class PostFilter(FilterSet):

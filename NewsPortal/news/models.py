@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import pgettext_lazy
 
 
 class Author(models.Model):
@@ -18,8 +19,8 @@ class Author(models.Model):
         return f'{self.user}'
 
     class Meta:
-        verbose_name = 'Автор'
-        verbose_name_plural = 'Авторы'
+        verbose_name = pgettext_lazy('Автор', 'Автор')
+        verbose_name_plural = pgettext_lazy('Авторы', 'Авторы')
 
 
 class Category(models.Model):
@@ -29,11 +30,11 @@ class Category(models.Model):
     education = 'ED'
     religion = 'RE'
     CATS = [
-        (politics, 'Политика'),
-        (sport, 'Спорт'),
-        (science, 'Наука'),
-        (education, 'Образование'),
-        (religion, 'Религия')
+        (politics, pgettext_lazy('Политика','Политика')),
+        (sport, pgettext_lazy('Спорт', 'Спорт')),
+        (science, pgettext_lazy('Наука', 'Наука')),
+        (education, pgettext_lazy('Образование', 'Образование')),
+        (religion, pgettext_lazy('Религия', 'Религия'))
     ]
     category_name = models.CharField(max_length = 2, choices = CATS, default = politics, unique = True)
     subscribers = models.ManyToManyField(User, related_name='subscribers')
@@ -43,16 +44,16 @@ class Category(models.Model):
         
     
     class Meta:
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = pgettext_lazy('Категория', 'Категория')
+        verbose_name_plural = pgettext_lazy('Категории', 'Категории')
 
 
 class Post(models.Model):   
     news = 'NW'
     article = 'AR'
     CHOICE = [
-        (news, 'Новость'),
-        (article, 'Статья')
+        (news, pgettext_lazy('Новость', 'Новость')),
+        (article, pgettext_lazy('Статья', 'Статья'))
     ]   
 
     post_type = models.CharField(max_length = 2, choices = CHOICE, default = news)
@@ -78,10 +79,9 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.post_title}'
     
-
     class Meta:
-        verbose_name = 'Пост'
-        verbose_name_plural = 'Посты'
+        verbose_name = pgettext_lazy('Пост', 'Пост')
+        verbose_name_plural = pgettext_lazy('Посты', 'Посты')
 
 
 class PostCategory(models.Model):

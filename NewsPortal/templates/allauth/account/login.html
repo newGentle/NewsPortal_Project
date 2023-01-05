@@ -10,7 +10,7 @@
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
-<p>Пожалуйста, войдите с одним из ваших внешних аккаунтов. <br> Или <a href="{{ signup_url}}">зарегистрируйтесь</a>  и авторизуйтесь на сайте {{ site.name }}:</p>
+<p> {% blocktranslate %} Пожалуйста, войдите с одним из ваших внешних аккаунтов. <br> Или <a href="{{ signup_url}}">зарегистрируйтесь</a>  и авторизуйтесь на сайте {{ site.name }}: {% endblocktranslate %}</p>
 
 <div class="socialaccount_ballot">
 
