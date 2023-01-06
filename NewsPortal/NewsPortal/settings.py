@@ -68,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'news.middlewares.TimezoneMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
 
@@ -151,7 +152,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale')

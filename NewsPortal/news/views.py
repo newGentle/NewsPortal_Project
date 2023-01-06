@@ -9,6 +9,8 @@ from .filters import PostFilter
 from .models import Category, Post, User
 from .tasks import new_post_notify
 from django.utils.translation import gettext as _
+import pytz
+from django.utils import timezone
 # Create your views here.
 
 
@@ -31,8 +33,14 @@ class PostsList(ListView):
             today = datetime.datetime.today()
             today = today.replace(hour=0, minute=0, second=0)
             context['author_posts'] = Post.objects.filter(post_author__user=self.request.user).filter(post_date__gte=(today)).count
+            context['current_time'] = timezone.now()
+            context['timezones'] = pytz.common_timezones
         # context['author_posts'] = datetime.time
         return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
 
 
 class PostDetail(DetailView):
