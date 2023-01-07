@@ -1,0 +1,45 @@
+{% extends 'flatpages/default.html' %}
+{% load i18n %}
+{% load tz %}
+
+{% block title %}
+{% translate "Настройки" %}
+{% endblock title %}
+
+{% block content %}
+<div class="container-lg">
+    <div class="row">
+        <div class="col-6">
+            <form action="{% url 'set_language'%}" method="POST" style="display: flex;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ redirect_to }}">
+                <select name="language" id="" class="form-select form-select-sm bg-dark text-white ms-1">
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} - {{ language.code }}
+                    </option>
+                {% endfor %}
+                </select>
+                <input type="submit" value="set">
+            </form>
+            {% get_current_timezone as TIME_ZONE %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ redirect_to }}">
+                <label for="timezone">Time zone:</label>
+                <select name="timezone">
+                    {% for tz in timezones %}
+                    <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Set">
+            </form> 
+
+            {{ TIME_ZONE }}
+            {{ current_time|timezone:TIME_ZONE }} <!-- Отображаем время в выбранном часовом поясе  -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

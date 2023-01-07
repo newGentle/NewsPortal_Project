@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .forms import PostForm
 from .filters import PostFilter
 from .models import Category, Post, User
@@ -33,14 +33,9 @@ class PostsList(ListView):
             today = datetime.datetime.today()
             today = today.replace(hour=0, minute=0, second=0)
             context['author_posts'] = Post.objects.filter(post_author__user=self.request.user).filter(post_date__gte=(today)).count
-            context['current_time'] = timezone.now()
-            context['timezones'] = pytz.common_timezones
+            
         # context['author_posts'] = datetime.time
         return context
-
-    def post(self, request):
-        request.session['django_timezone'] = request.POST['timezone']
-        return redirect('/')
 
 
 class PostDetail(DetailView):
@@ -87,6 +82,7 @@ class NewsCreate(PermissionRequiredMixin, CreateView):
         new_post_notify.apply_async([post.pk], countdown = 60)
         return super().form_valid(form)
 
+
 class ArticleCreate(PermissionRequiredMixin, CreateView):
     permission_required = ('news.add_post')
     form_class = PostForm
@@ -121,3 +117,19 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
     model = Post
     template_name = 'postdelete.html'
     success_url = reverse_lazy('posts_list')
+
+
+class lang_and_tz_settings(TemplateView):
+    template_name = 'settings.html'
+    success_url = reverse_lazy('settings')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones
+        return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('settings')
+

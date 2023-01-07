@@ -35,6 +35,9 @@
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'posts_list' %}">{% translate 'Посты' %}</a>
                     </li>
+                    <li class="nav-item">
+                      <div class='nav-link text-white' >{% now 'H : i'%}</div>
+                    </li>
                   </ul>
                 </div>
            
@@ -45,37 +48,7 @@
                 {% else %}
                   <a href="/accounts/login" class="btn btn-dark btn-md"  role="button" aria-disabled="true">{% translate '| Войти |' %}</a>
                 {% endif %}
-                
-                
-                <form action="{% url 'set_language'%}" method="POST" style="display: flex;">
-                  {% csrf_token %}
-                  <input type="hidden" name="next" value="{{ redirect_to }}">
-                  <select name="language" id="" class="form-select form-select-sm bg-dark text-white ms-1">
-                    {% get_available_languages as LANGUAGES %}
-                    {% get_language_info_list for LANGUAGES as languages %}
-                    {% for language in languages %}
-                      <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
-                        {{ language.name_local }} - {{ language.code }}
-                      </option>
-                    {% endfor %}
-                  </select>
-                  <input type="submit" value="set">
-                </form>
-                {% get_current_timezone as TIME_ZONE %}
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <label for="timezone">Time zone:</label>
-                    <select name="timezone">
-                        {% for tz in timezones %}
-                        <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Set">
-                </form> 
- 
-    {{ TIME_ZONE }}
-    {{ current_time|timezone:TIME_ZONE }} <!-- Отображаем время в выбранном часовом поясе  -->
- 
+                <a href="{% url 'settings' %}"><img src={% static 'images/icons/settings-svgrepo-com.svg' %} alt="settings" width='15px'></a>
               </div>
         </nav>
      
